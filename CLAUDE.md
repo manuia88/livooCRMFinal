@@ -1,22 +1,21 @@
 # 🏢 LivooCRMFinal - Documentación del Proyecto
 
-> **CRM Inmobiliario de Clase Mundial**
-> Frontend público + Backoffice completo | Presupuesto: $0-50 USD/mes
+> **Plataforma Inmobiliaria LOFT - Implementación Frontend**
+> Web pública LOFT-styled + Backoffice CRM | Presupuesto: $0-50 USD/mes
 
 ---
 
 ## 📋 RESUMEN DEL PROYECTO
 
-**LivooCRMFinal** es una plataforma inmobiliaria completa que consta de dos componentes principales:
+**LivooCRMFinal** es una plataforma inmobiliaria completa inspirada en **LOFT** (Brasil), que consta de:
 
-1. **Web Pública**: Sitio para búsqueda de propiedades con mapas interactivos, filtros avanzados, y captación de leads
-2. **Backoffice CRM**: Sistema completo con 21 módulos para gestión inmobiliaria
+1. **Web Pública LOFT**: Sitio para búsqueda de propiedades con diseño premium, mapas interactivos, y captación de leads
+2. **Portal para Agencias**: Landing pages para agencias inmobiliarias y CRM
+3. **Backoffice CRM**: Sistema completo con 21 módulos para gestión inmobiliaria
 
-**Filosofía del proyecto:**
-- Stack 100% gratuito (presupuesto máximo $0-50/mes)
-- Frontend-first (mock data inicialmente, backend se conecta después)
-- Design system neutro y profesional
-- Inspirado en: Lone Wolf, Compass, Loft, Tokko Broker, EasyBroker, GoHighLevel, Monopolio
+**Estado actual**: Fase 1 & 2 completadas (Design System + Home Page LOFT)
+
+**Próximos pasos**: Completar Home Page → Property Detail → Search/Filters → CRM Module
 
 ---
 
@@ -30,7 +29,7 @@
 
 ### UI & Components
 - **Component Library**: shadcn/ui (Radix UI primitives)
-- **Icons**: Lucide React 0.564.0
+- **Icons**: Lucide React 0.564.0 + react-icons 4.12.0
 - **Animations**: Framer Motion 12.34.0
 - **Toasts**: Sonner 2.0.7
 
@@ -47,98 +46,54 @@
 - **Charts**: Recharts 3.7.0
 - **Dates**: date-fns 4.1.0
 
-### Utilities
-- **CSS**: clsx 2.1.1, tailwind-merge 3.4.0
-- **Variants**: class-variance-authority 0.7.1
-- **Animations**: tailwindcss-animate 1.0.7
-
 ---
 
-## 🎨 DECISIONES DE ARQUITECTURA
+## 🎨 SISTEMA DE DISEÑO LOFT
 
-### 1. **Tailwind CSS: Downgrade de v4 a v3**
+### Colores de Marca LOFT
+```css
+/* Brand Colors */
+--loft-orange:       #FF6B35;  /* Color principal LOFT */
+--loft-orange-hover: #E65A2B;  /* Hover states */
+--loft-orange-light: #FFF4F0;  /* Backgrounds */
+--loft-red-dark:     #8B1E1E;  /* Gradient accent */
+--loft-gradient-start: #FF6B35;
+--loft-gradient-end:   #8B1E1E;
 
-**Decisión**: Usar Tailwind CSS 3.4.19 en lugar de v4
-**Razón**: Tailwind CSS 4 está en versiones tempranas y tiene problemas de compatibilidad con:
-- Next.js 16 + Turbopack
-- shadcn/ui
-- Sistema de plugins PostCSS
-
-**Beneficios**:
-- ✅ Estabilidad comprobada
-- ✅ Compatibilidad total con shadcn/ui
-- ✅ Plugin `tailwindcss-animate` funcionando correctamente
-- ✅ Build sin errores
-
-**Configuración PostCSS** (`postcss.config.mjs`):
-```js
-{
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  }
-}
+/* Semantic Colors */
+--color-green:     #22C55E;  /* Success, WhatsApp */
+--color-red:       #EF4444;  /* Errors */
+--color-amber:     #F59E0B;  /* Warnings */
+--color-blue:      #3B82F6;  /* Info */
 ```
 
-### 2. **Design System Neutro Profesional**
+### Tipografía
+```css
+/* Font Family */
+--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-**Colores principales**:
-- `--bg-page`: #F5F5F7 (Apple-style gray)
-- `--bg-card`: #FFFFFF (blanco puro)
-- `--text-primary`: #111827 (Gray-900)
-- `--border-default`: #E5E7EB (Gray-200)
-
-**Reglas absolutas**:
-- ❌ NUNCA gradientes
-- ❌ NUNCA sombras de color
-- ❌ NUNCA emojis en UI
-- ✅ Solo Lucide Icons (outlined)
-- ✅ Animaciones máx 0.3s
-- ✅ Espaciado en múltiplos de 4px
-
-### 3. **Estructura de Rutas con Route Groups**
-
-**Decisión**: Usar route groups `(public)` y `(backoffice)`
-**Razón**: Separación clara entre web pública y CRM sin afectar URLs
-
-```
-app/
-├── (public)/          # Web pública (sin /public en URL)
-│   ├── page.tsx       # → /
-│   ├── buscar/        # → /buscar
-│   ├── propiedad/[id]/ # → /propiedad/123
-│   └── layout.tsx
-│
-└── (backoffice)/      # CRM (sin /backoffice en URL)
-    ├── dashboard/     # → /dashboard
-    ├── propiedades/   # → /propiedades
-    └── layout.tsx
+/* Typography Scale (LOFT Extended) */
+--text-xs:    12px;
+--text-sm:    14px;
+--text-base:  16px;
+--text-md:    18px;
+--text-lg:    20px;
+--text-xl:    24px;
+--text-2xl:   28px;
+--text-3xl:   32px;
+--text-4xl:   40px;
+--text-5xl:   48px;  /* Hero headlines */
+--text-6xl:   56px;  /* Large hero headlines */
 ```
 
-### 4. **MapLibre GL en lugar de Google Maps / Mapbox**
+### Botones LOFT
+- **Primario**: Fondo naranja (#FF6B35), texto blanco
+- **Secundario**: Fondo blanco, borde naranja
+- **Hover**: Naranja oscuro (#E65A2B)
 
-**Decisión**: MapLibre GL JS + OpenFreeMap
-**Razón**: 100% gratuito, sin API keys, sin límites
-
-**Comparación**:
-| Feature | Google Maps | Mapbox | MapLibre + OFM |
-|---------|-------------|--------|----------------|
-| Costo | $7/1000 requests | $0.50/1000 loads | $0 SIEMPRE |
-| API Key | Sí | Sí | No |
-| Vector tiles | No | Sí | Sí |
-| WebGL | Limitado | Sí | Sí |
-| Clusters | Plugin | Nativo | Nativo |
-
-### 5. **globals.css: Híbrido Custom + shadcn**
-
-**Problema encontrado**: shadcn agregó `@layer base` con clases que causaban errores
-**Solución**: Eliminar `@layer base` y mantener variables CSS personalizadas
-
-El archivo `globals.css` contiene:
-1. Custom CSS Variables (nuestro design system)
-2. shadcn CSS Variables (oklch colors para componentes)
-3. @theme inline (mapping de variables)
-4. Sin @layer base (causaba conflictos)
+### Espaciado
+- Sistema base: 8px
+- Section gaps: 40px (mobile) / 60px (tablet) / 80px (desktop)
 
 ---
 
@@ -147,124 +102,192 @@ El archivo `globals.css` contiene:
 ```
 LivooCRMFinal/
 ├── app/
-│   ├── (public)/              # Web pública
-│   │   ├── page.tsx           # Home
-│   │   ├── buscar/            # Búsqueda con mapa 50/50
-│   │   ├── propiedad/[id]/    # Detalle de propiedad
-│   │   ├── desarrollos/       # Desarrollos inmobiliarios
-│   │   ├── agentes/           # Directorio de agentes
-│   │   ├── valuacion/         # Solicitud de valuación
-│   │   └── layout.tsx         # Layout público (header + footer)
-│   │
-│   ├── (backoffice)/          # CRM Backoffice
-│   │   ├── dashboard/         # ✅ Dashboard con KPIs
-│   │   ├── propiedades/       # ✅ CRUD propiedades (4 vistas)
-│   │   ├── captaciones/       # Captación de propiedades
-│   │   ├── inventario/        # Vista consolidada stock
-│   │   ├── contactos/         # CRM contactos + lead scoring
-│   │   ├── oportunidades/     # Pipeline Kanban 12 etapas
-│   │   ├── inbox/             # Inbox unificado multi-canal
-│   │   ├── tareas/            # Tareas con 3 vistas
-│   │   ├── broadcast/         # Broadcast WhatsApp
-│   │   ├── email-marketing/   # Email campaigns
-│   │   ├── social-planner/    # Planificador social
-│   │   ├── campanas/          # Campañas Ads
-│   │   ├── automatizaciones/  # Workflow builder visual
-│   │   ├── valuacion/         # IA Valuación
-│   │   ├── ai-assistant/      # Asistente IA
-│   │   ├── analytics/         # Analytics 2.0
-│   │   ├── desarrollos/       # Desarrollos (7 tabs)
-│   │   ├── bolsa/             # Bolsa inmobiliaria
-│   │   ├── reportes/          # Reportes CMA, propietario
-│   │   ├── config/            # Configuración
-│   │   ├── propietarios/      # Portal propietarios
-│   │   └── layout.tsx         # Layout backoffice (sidebar + header)
-│   │
-│   ├── globals.css            # ✅ Design system + shadcn
-│   └── layout.tsx             # ✅ Layout raíz
+│   ├── page.tsx               # ✅ Home LOFT
+│   ├── globals.css            # ✅ Design system LOFT + shadcn
+│   └── layout.tsx             # ✅ Root layout
 │
 ├── components/
-│   ├── ui/                    # ✅ shadcn components (16)
+│   ├── ui/                    # ✅ shadcn components
+│   │   ├── badge.tsx          # ✅ Con variantes LOFT
 │   │   ├── button.tsx
-│   │   ├── card.tsx
 │   │   ├── input.tsx
-│   │   ├── dialog.tsx
-│   │   ├── sheet.tsx
-│   │   ├── avatar.tsx
-│   │   ├── badge.tsx
-│   │   ├── calendar.tsx
-│   │   ├── dropdown-menu.tsx
-│   │   ├── label.tsx
-│   │   ├── popover.tsx
-│   │   ├── scroll-area.tsx
 │   │   ├── select.tsx
-│   │   ├── separator.tsx
-│   │   ├── tabs.tsx
-│   │   └── textarea.tsx
-│   ├── layout/                # ✅ Componentes de layout
-│   │   ├── sidebar.tsx        # ✅ Sidebar con 21 módulos
-│   │   ├── header.tsx         # ✅ Header backoffice
-│   │   ├── page-container.tsx # ✅ Contenedor de páginas
-│   │   ├── mobile-nav.tsx     # ✅ Navegación móvil
-│   │   ├── public-header.tsx  # ✅ Header público
-│   │   ├── public-footer.tsx  # ✅ Footer público
-│   │   └── module-placeholder.tsx # ✅ Placeholder reutilizable
-│   ├── property/              # ⏳ TODO
-│   │   ├── property-card.tsx
-│   │   ├── property-table.tsx
-│   │   ├── property-drawer.tsx
-│   │   ├── new-property-wizard.tsx
-│   │   └── property-filters-sidebar.tsx
-│   ├── dashboard/             # ⏳ TODO
-│   │   ├── kpi-card.tsx
-│   │   ├── funnel-chart.tsx
-│   │   └── activity-feed.tsx
-│   ├── map/                   # ⏳ TODO
-│   │   ├── map-view.tsx       # MapLibre wrapper
-│   │   └── property-marker.tsx
-│   └── shared/                # ⏳ TODO
+│   │   └── ...
+│   │
+│   ├── layout/                # ✅ Layout components
+│   │   ├── loft-header.tsx    # ✅ Header LOFT sticky
+│   │   ├── loft-footer.tsx    # ✅ Footer 6 columnas + WhatsApp
+│   │   ├── sidebar.tsx        # Sidebar CRM (backoffice)
+│   │   └── header.tsx         # Header backoffice
+│   │
+│   ├── home/                  # ✅ Home page components
+│   │   ├── hero-section.tsx   # ✅ Hero con gradiente
+│   │   ├── service-cards.tsx  # ✅ 4 tarjetas de servicios
+│   │   └── featured-properties.tsx # ✅ Grid de propiedades
+│   │
+│   ├── search/                # ✅ Search components
+│   │   └── search-module.tsx  # ✅ Módulo de búsqueda con tabs
+│   │
+│   ├── property/              # ✅ Property components
+│   │   └── property-card.tsx  # ✅ Card con carrusel de imágenes
+│   │
+│   └── dashboard/             # ⏳ CRM components (futuro)
 │
 ├── lib/
 │   ├── utils.ts               # ✅ cn() helper
-│   ├── constants.ts           # ⏳ TODO
-│   ├── validations.ts         # ⏳ TODO: Zod schemas
-│   └── mock-data/             # ✅ Mock data completo
-│       ├── properties.ts      # ✅ 15 propiedades realistas
-│       ├── contacts.ts        # ✅ 10 contactos + actividades
-│       ├── opportunities.ts   # ✅ 10 oportunidades + pipeline
-│       ├── tasks.ts           # ✅ 12 tareas variadas
-│       ├── dashboard.ts       # ✅ KPIs, charts, activity feed
-│       └── index.ts           # ✅ Exportaciones centralizadas
+│   └── mock-data/             # Mock data (futuro)
+│       └── properties.ts
 │
-├── types/                     # ✅ Tipos TypeScript completos
-│   ├── property.ts            # ✅ Property, Address, Agent, Filters
-│   ├── contact.ts             # ✅ Contact, Activity, Stats
-│   ├── opportunity.ts         # ✅ Opportunity, Pipeline, Stats
-│   ├── task.ts                # ✅ Task, Stats
-│   └── index.ts               # ✅ Exportaciones + tipos compartidos
-│
-├── hooks/
-│   ├── use-properties.ts      # ⏳ TODO
-│   ├── use-contacts.ts        # ⏳ TODO
-│   └── use-toast.ts           # shadcn hook
+├── types/                     # TypeScript types (futuro)
+│   └── property.ts
 │
 ├── public/
-│   ├── images/
-│   └── icons/
+│   ├── hero-couple.jpg        # ✅ Imagen hero
+│   ├── property1.jpg          # ✅ Apartamento moderno
+│   ├── property2.jpg          # ✅ Casa exterior
+│   ├── property3.jpg          # ✅ Studio interior
+│   └── property4.jpg          # ✅ Loft luxury
 │
-├── .gitignore                 # ✅
-├── tailwind.config.ts         # ✅ Design system
-├── postcss.config.mjs         # ✅
-├── tsconfig.json              # ✅
-├── next.config.ts             # ✅
-├── package.json               # ✅
+├── package.json               # ✅ Dependencies
+├── tailwind.config.ts         # ✅ LOFT design tokens
 └── CLAUDE.md                  # 📄 Este archivo
 ```
 
-**Leyenda**:
-- ✅ Completado
-- ⏳ Pendiente
-- 📄 Documentación
+---
+
+## 🎯 ESTADO ACTUAL - FASE 1 & 2 COMPLETADAS
+
+### ✅ FASE 1: Design System Foundation (COMPLETO)
+
+**Implementado**:
+- [x] Colores de marca LOFT (naranja #FF6B35, rojo #8B1E1E)
+- [x] Tipografía extendida hasta 56px para héroes
+- [x] Sistema de botones con naranja como primario
+- [x] Badges con variantes LOFT (new, propertyType, success)
+- [x] Header sticky con navegación y CTA
+- [x] Footer 6 columnas con WhatsApp flotante
+- [x] Espaciado consistente (sistema 8px)
+
+**Archivos modificados**:
+- `app/globals.css` - Design tokens LOFT
+- `components/ui/badge.tsx` - Variantes LOFT
+- `components/layout/loft-header.tsx` - Header con logo y menú
+- `components/layout/loft-footer.tsx` - Footer completo
+
+---
+
+### ✅ FASE 2: Home Page (COMPLETO)
+
+**Implementado**:
+- [x] Hero section con gradiente naranja/rojo
+- [x] Módulo de búsqueda con tabs (Comprar/Alugar)
+- [x] 4 tarjetas de servicios con iconos
+- [x] Grid de propiedades destacadas con filtros
+- [x] Property cards con carrusel de imágenes
+- [x] Botón de favoritos funcional
+- [x] 5 imágenes generadas con IA
+
+**Componentes creados**:
+- `components/home/hero-section.tsx` - Hero con gradiente
+- `components/home/service-cards.tsx` - 4 servicios
+- `components/home/featured-properties.tsx` - Grid de propiedades
+- `components/search/search-module.tsx` - Búsqueda con tabs
+- `components/property/property-card.tsx` - Card con carrusel
+
+**Mock Data**:
+```typescript
+// 4 propiedades de muestra
+- Apartamento moderno (R$ 1.200.000) - Jardim Paulista
+- Casa espaciosa (R$ 2.500.000) - Pinheiros
+- Studio charmoso (R$ 480.000) - Vila Madalena
+- Loft de luxo (R$ 1.800.000) - Itaim Bibi
+```
+
+---
+
+## 📸 CAPTURAS DE PANTALLA
+
+### Hero Section
+![Hero Section](file:///Users/manuelacosta/.gemini/antigravity/brain/e2009bd0-f9fe-4258-b07e-d6daa2b3422d/hero_section_1771038599377.png)
+
+**Características**:
+- Gradiente naranja → rojo oscuro
+- Headline grande y clara
+- Módulo de búsqueda integrado
+- Imagen de pareja con llaves
+- Wave divider SVG
+
+### Service Cards
+![Service Cards](file:///Users/manuelacosta/.gemini/antigravity/brain/e2009bd0-f9fe-4258-b07e-d6daa2b3422d/service_cards_1771038604801.png)
+
+**4 Servicios**:
+1. Encuentra una agencia inmobiliaria
+2. Vender o alquilar mi propiedad
+3. Financia tu propiedad
+4. Agencia inmobiliaria, únete a Loft
+
+### Featured Properties
+![Featured Properties](file:///Users/manuelacosta/.gemini/antigravity/brain/e2009bd0-f9fe-4258-b07e-d6daa2b3422d/featured_properties_1771038609584.png)
+
+**Características**:
+- Tabs de filtros (Novidades, 3 quartos, etc.)
+- Grid 4 columnas responsive
+- Cards con carrusel de imágenes
+- Badges "Chegou hoje" + tipo de propiedad
+- Botón de favoritos
+- Precio destacado en BRL
+- Iconos de características (m², quartos, baños, vagas)
+
+### Footer
+![Footer](file:///Users/manuelacosta/.gemini/antigravity/brain/e2009bd0-f9fe-4258-b07e-d6daa2b3422d/footer_section_1771038616152.png)
+
+**Estructura**:
+- 6 columnas de links
+- Redes sociales
+- WhatsApp flotante (verde)
+- Copyright © 2026 Loft
+
+---
+
+## 🚀 PRÓXIMOS PASOS
+
+### Fase 2 (Pendiente)
+- [ ] Sección "Curadoria Loft" (propiedades temáticas)
+- [ ] Links de ciudades y barrios
+
+### Fase 3: Property Detail Page
+- [ ] Galería de imágenes con lightbox
+- [ ] Información detallada de la propiedad
+- [ ] Sidebar sticky con formulario de contacto
+- [ ] Calculadora de financiamiento
+- [ ] Secciones expandibles (ubicación, ambientes, simulador)
+- [ ] Propiedades similares
+
+### Fase 4: Search & Filters
+- [ ] Página de búsqueda avanzada
+- [ ] Filtros laterales (precio, habitaciones, amenidades)
+- [ ] Grid de resultados
+- [ ] Ordenamiento
+
+### Fase 5: Agency Portal
+- [ ] Landing page para agencias
+- [ ] Soluciones por objetivo
+- [ ] Carrusel de logos de partners
+
+### Fase 6: CRM Module
+- [ ] Landing page CRM
+- [ ] Comparación con/sin LOFT CRM
+- [ ] Planes de precios (4 cards)
+- [ ] Tabla comparativa de features
+- [ ] Integraciones
+- [ ] Add-ons
+
+### Fase 7: Optimization
+- [ ] Lazy loading de imágenes
+- [ ] Skeleton loading states
+- [ ] Performance optimization
+- [ ] SEO meta tags
+- [ ] Responsive testing
 
 ---
 
@@ -272,7 +295,7 @@ LivooCRMFinal/
 
 ### Desarrollo
 ```bash
-npm run dev           # Iniciar servidor de desarrollo
+npm run dev           # ✅ Servidor en http://localhost:3000
 npm run build         # Build de producción
 npm run start         # Servidor de producción
 npm run lint          # Linter
@@ -281,360 +304,174 @@ npm run lint          # Linter
 ### Instalación de componentes shadcn
 ```bash
 npx shadcn@latest add [component-name]
-
-# Ejemplos:
-npx shadcn@latest add table
-npx shadcn@latest add command
-npx shadcn@latest add toast
-```
-
-### Git
-```bash
-git init
-git add .
-git commit -m "mensaje"
-git push
-```
-
-### Deploy a Vercel
-```bash
-vercel --prod
 ```
 
 ---
 
-## 📊 ESTADO ACTUAL DEL DESARROLLO
+## 📊 COMPONENTES IMPLEMENTADOS
 
-### ✅ FASE 0: Scaffolding (100% COMPLETO)
+### Layout Components
+| Component | Path | Estado |
+|-----------|------|--------|
+| LOFT Header | `components/layout/loft-header.tsx` | ✅ |
+| LOFT Footer | `components/layout/loft-footer.tsx` | ✅ |
+| Page Container | `components/layout/page-container.tsx` | ✅ |
 
-**Completado**:
-- [x] Proyecto Next.js 16 inicializado
-- [x] Tailwind CSS 3 configurado con design system
-- [x] globals.css con design tokens completos
-- [x] Estructura de carpetas completa
-- [x] Stack de dependencias instalado (shadcn, Zustand, MapLibre, etc.)
-- [x] Build funcionando sin errores
-- [x] 16 componentes shadcn instalados
-- [x] Layouts (public y backoffice) creados
-- [x] Sidebar implementado con 21 módulos organizados en 4 grupos
-- [x] Tipos TypeScript completos (Property, Contact, Opportunity, Task)
-- [x] Mock data generado (15 propiedades, 10 contactos, 10 oportunidades, 12 tareas)
-- [x] Placeholder pages creadas para todos los 21 módulos
-- [x] Git inicializado con commit inicial
+### UI Components
+| Component | Features | Estado |
+|-----------|----------|--------|
+| Badge | 3 variantes LOFT (new, propertyType, success) | ✅ |
+| Button | Estilo naranja LOFT | ✅ |
+| Input | Con iconos | ✅ |
+| Select | Dropdown custom | ✅ |
 
-**Pendiente**:
-- [ ] Deploy a Vercel
-- [ ] Implementar páginas públicas (Home, Búsqueda, Detalle)
-- [ ] Comenzar Fase 1: Dashboard y Propiedades (CRUD completo)
-
----
-
-## 📂 DETALLES DE IMPLEMENTACIÓN
-
-### Tipos TypeScript Implementados
-
-**`types/property.ts`** - Sistema de propiedades completo:
-- 6 tipos de propiedad (casa, departamento, terreno, local, oficina, bodega)
-- 3 operaciones (venta, renta, traspaso)
-- 5 estados (disponible, apartado, vendido, rentado, inactivo)
-- Interfaces: Property, Address, Agent, PropertyFilters, PropertyStats
-
-**`types/contact.ts`** - CRM de contactos:
-- 5 tipos de contacto (comprador, vendedor, arrendador, arrendatario, inversionista)
-- Lead scoring (frío, tibio, caliente)
-- 9 fuentes de leads (web, facebook, instagram, google, referido, walk-in, cold-call, whatsapp, email)
-- Interfaces: Contact, ContactActivity, ContactStats
-
-**`types/opportunity.ts`** - Pipeline de ventas:
-- 12 etapas del pipeline (lead-nuevo → cierre)
-- 4 niveles de prioridad
-- Interfaces: Opportunity, OpportunityActivity, OpportunityStats, PipelineStage
-
-**`types/task.ts`** - Gestión de tareas:
-- 7 tipos de tarea (llamada, email, whatsapp, reunión, visita, seguimiento, otro)
-- 4 estados (pendiente, en-progreso, completada, cancelada)
-- Interface: Task, TaskStats
-
-### Mock Data Generado
-
-**15 Propiedades realistas** distribuidas en:
-- CDMX: Polanco (2), Roma Norte (2), Condesa (2), Santa Fe (2), Insurgentes (1), Zona Rosa (1), Vallejo (1)
-- Guadalajara: Providencia (2)
-- Monterrey: San Pedro (2)
-
-**Características del mock data**:
-- Precios de mercado reales (12.5M - 45M para venta, 28K - 85K para renta)
-- Coordenadas GPS precisas para cada propiedad
-- Health scores variados (72-96)
-- Imágenes de Unsplash
-- 4 agentes con perfiles completos
-
-**10 Contactos** con:
-- Estados variados (leads, prospectos, clientes, inactivos)
-- Lead sources diversos
-- Presupuestos realistas
-- Relación con propiedades de interés
-
-**10 Oportunidades** en diferentes etapas:
-- Pipeline realista desde lead-nuevo hasta cierre/perdido
-- Valores desde 35K (renta) hasta 45M (venta)
-- Probabilidades de cierre variables
-
-**12 Tareas** con:
-- Prioridades y tipos variados
-- Fechas de vencimiento
-- Relaciones con contactos/oportunidades/propiedades
-
-### Componentes de Layout
-
-**Sidebar** (`components/layout/sidebar.tsx`):
-- 21 módulos organizados en 4 grupos
-- Navegación activa con usePathname
-- Responsive (desktop fixed, mobile drawer)
-- Iconografía Lucide completa
-
-**Header** (`components/layout/header.tsx`):
-- Búsqueda global
-- Notificaciones (badge de alerta)
-- Menú de usuario
-- Settings rápidos
-
-**Public Header/Footer**:
-- Navegación pública responsiva
-- Links a secciones principales
-- Social media links
-- SEO optimizado
+### Home Components
+| Component | Description | Estado |
+|-----------|-------------|--------|
+| Hero Section | Gradiente + búsqueda | ✅ |
+| Service Cards | 4 servicios con iconos | ✅ |
+| Featured Properties | Grid + filtros | ✅ |
+| Search Module | Tabs Comprar/Alugar | ✅ |
+| Property Card | Carrusel + favoritos | ✅ |
 
 ---
 
-## 🎯 PRÓXIMOS PASOS (Fase 1)
+## 🎨 BRAND CONSISTENCY
 
-### Opción A: Completar Módulo Propiedades
+**LOFT Orange (#FF6B35)** se usa consistentemente en:
+- ✅ Botones primarios
+- ✅ Tabs activos en filtros
+- ✅ Hover de iconos
+- ✅ Links hover
+- ✅ CTAs destacados
+- ✅ Gradientes de hero
 
-**Prioridad**: Alta
-**Tiempo estimado**: 2-3 sesiones
+**Gradiente LOFT**: `linear-gradient(to right, #FF6B35, #D45B29, #8B1E1E)`
 
-**Tareas**:
-1. **Vista Galería** (Grid de cards con imágenes)
-   - Property cards reutilizables
-   - Infinite scroll o paginación
-   - Quick actions (editar, eliminar, ver)
+---
 
-2. **Vista Lista** (Table con TanStack Table)
-   - Columnas configurables
-   - Sorting y filtering
-   - Bulk actions
+## 📝 FEATURES IMPLEMENTADAS
 
-3. **Vista Mapa** (MapLibre GL)
-   - Markers clusterizados
-   - Popup con info de propiedad
-   - Filtros en sidebar
+### Property Card
+- ✅ Carrusel de imágenes (múltiples fotos)
+- ✅ Navegación prev/next (visible on hover)
+- ✅ Indicadores de puntos
+- ✅ Contador de fotos
+- ✅ Badge "Chegou hoje" (amarillo)
+- ✅ Badge tipo de propiedad (gris)
+- ✅ Botón de favoritos (toggle)
+- ✅ Precio destacado en BRL
+- ✅ Dirección truncada
+- ✅ Iconos de características (m², quartos, baños, vagas)
+- ✅ Botón "Ver contato"
+- ✅ Hover effects
 
-4. **Wizard Nueva Propiedad**
-   - 4 steps: Básico, Ubicación, Detalles, Media
-   - Validación con Zod
-   - Upload de imágenes (simulado)
+### Search Module
+- ✅ Tabs Comprar/Alugar
+- ✅ Input de ubicación con icono
+- ✅ Select tipo de inmueble
+- ✅ Select número de habitaciones
+- ✅ Botón de búsqueda naranja
+- ✅ Link "Buscar por características"
 
-5. **Filtros Avanzados**
-   - Sidebar de filtros
-   - Búsqueda por texto
-   - Rangos de precio/área
-   - Multi-select tipo/operación
+### Hero Section
+- ✅ Gradiente naranja → rojo
+- ✅ Headline 48-56px
+- ✅ Subheadline descriptivo
+- ✅ Search module integrado
+- ✅ Imagen de pareja (desktop)
+- ✅ Wave divider SVG
 
-### Opción B: Implementar Páginas Públicas
+---
 
-**Prioridad**: Media
-**Tiempo estimado**: 1-2 sesiones
+## 🌐 RESPONSIVE DESIGN
 
-**Tareas**:
-1. **Home Page**
-   - Hero section con CTA
-   - Featured properties
-   - Búsqueda rápida
-   - Stats section
-
-2. **Búsqueda de Propiedades**
-   - Layout 50/50 (lista + mapa)
-   - Filtros sidebar
-   - Vista de resultados
-
-3. **Detalle de Propiedad**
-   - Galería de imágenes
-   - Info completa
-   - Formulario de contacto
-   - Propiedades similares
-
-### Opción C: Deploy a Vercel
-
-**Prioridad**: Baja (pero bueno tener)
-**Tiempo estimado**: 30 minutos
-
-**Pasos**:
-1. Conectar repo a Vercel
-2. Configurar build settings
-3. Deploy automático
-4. Configurar dominio (opcional)
+Todos los componentes son responsive:
+- **Header**: Hamburger menu en mobile
+- **Hero**: Layout stacked en mobile, side-by-side en desktop
+- **Service Cards**: 1 col (mobile) → 2 (tablet) → 4 (desktop)
+- **Property Grid**: 1 col (mobile) → 2 (tablet) → 4 (desktop)
+- **Footer**: 2-3 cols (mobile) → 6 (desktop)
+- **Filter Tabs**: Scroll horizontal en mobile
 
 ---
 
 ## 📚 REFERENCIAS
 
-### Documentación del Proyecto
-- **Design System**: `/Users/manuelacosta/Downloads/global-design-system.md`
-- **Arquitectura v5**: `/Users/manuelacosta/Desktop/LIVOO FINAL v5 ARQUITECTURA.docx`
-- **Plan Completo**: `~/.claude/plans/soft-dreaming-shore.md`
+### Documentación Técnica
+- **Plan de Implementación**: `brain/implementation_plan.md`
+- **Walkthrough Fase 1 & 2**: `brain/walkthrough.md`
+- **Tareas**: `brain/task.md`
 
-### CRMs de Referencia
-- **Lone Wolf**: Lead-to-close, relationships CRM
-- **Tokko Broker**: Multi-portal, publicación automática
-- **Loft**: UX LATAM, fintech integrado
-- **GoHighLevel**: Motor de automatizaciones
-- **Monopolio**: Inteligencia de mercado
-- **EasyBroker**: Bolsa inmobiliaria, MLS
+### Inspiración de Diseño
+- **LOFT Brasil**: https://loft.com.br
 - **Compass**: Búsqueda con mapa 50/50
+- **Tokko Broker**: Multi-portal
+- **EasyBroker**: UX LATAM
 
 ### Stack Documentation
-- [Next.js 15 Docs](https://nextjs.org/docs)
+- [Next.js 16 Docs](https://nextjs.org/docs)
 - [shadcn/ui](https://ui.shadcn.com)
 - [Tailwind CSS](https://tailwindcss.com)
 - [MapLibre GL JS](https://maplibre.org)
 - [Lucide Icons](https://lucide.dev)
-- [TanStack Query](https://tanstack.com/query)
-- [React Hook Form](https://react-hook-form.com)
-- [Zod](https://zod.dev)
-
----
-
-## 🐛 PROBLEMAS RESUELTOS
-
-### 1. Tailwind CSS 4 incompatibilidad
-**Error**: `Missing field 'negated' on ScannerOptions.sources`
-**Solución**: Downgrade a Tailwind CSS 3.4.19
-
-### 2. PostCSS plugin error
-**Error**: `The PostCSS plugin has moved to @tailwindcss/postcss`
-**Solución**: Cambiar de `@tailwindcss/postcss` a `tailwindcss` en postcss.config.mjs
-
-### 3. CSS @apply errors
-**Error**: `The 'text-foreground' class does not exist`
-**Solución**: Eliminar `@layer base` que agregó shadcn
-
-### 4. npm naming restrictions
-**Error**: `name can no longer contain capital letters`
-**Solución**: Renombrar directorio a minúsculas temporalmente
-
-### 5. TypeScript error en getContactStats
-**Error**: `Property 'inactivo' does not exist on type`
-**Problema**: Singular vs plural en mapeo de status
-**Solución**: Mapear explícitamente status singular a keys plural del objeto stats
-
----
-
-## 💡 TIPS & BEST PRACTICES
-
-### CSS
-- Usar SIEMPRE las variables CSS en lugar de hardcodear valores
-- Preferir Tailwind classes sobre CSS custom cuando sea posible
-- Mantener globals.css organizado por secciones con comentarios
-
-### Components
-- Cada componente debe ser reutilizable (DRY)
-- Usar shadcn/ui como base, extender cuando sea necesario
-- Props tipados con TypeScript strict
-
-### State Management
-- Zustand para estado global simple
-- TanStack Query para servidor state (cache, refetch, etc.)
-- React Hook Form para formularios (no state global)
-
-### Performance
-- Lazy load componentes pesados
-- Optimizar imágenes con Next.js Image
-- Virtualizar listas largas (react-window)
-- Code splitting por ruta
-
-### Git Commits
-```bash
-# Formato recomendado:
-git commit -m "feat: agregar sidebar con 21 módulos"
-git commit -m "fix: corregir error en property filter"
-git commit -m "refactor: mejorar tipos TypeScript"
-git commit -m "docs: actualizar CLAUDE.md"
-```
-
----
-
-## 🔐 VARIABLES DE ENTORNO
-
-**`.env.local`** (crear después):
-```env
-# Supabase (cuando se conecte backend)
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-
-# APIs (futuro)
-RESEND_API_KEY=
-GEMINI_API_KEY=
-
-# URLs
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
----
-
-## 📝 NOTAS IMPORTANTES
-
-1. **No usar backend todavía**: Todo con mock data hasta completar frontend
-2. **Design system es sagrado**: No inventar colores/espaciados fuera del sistema
-3. **MapLibre es gratis**: Sin API keys, sin límites, sin sorpresas
-4. **shadcn es copy-paste**: Los componentes se copian al proyecto, no es dependency
-5. **Presupuesto $0-50/mes**: Priorizar soluciones gratuitas siempre
-
----
 
 ---
 
 ## 📈 ESTADÍSTICAS DEL PROYECTO
 
-### Archivos Creados
-- **70 archivos** totales
-- **16,609 líneas** de código
-- **5 archivos** de tipos TypeScript
-- **7 componentes** de layout
-- **16 componentes** shadcn/ui
-- **21 páginas** del backoffice
-- **6 archivos** de mock data
+### Archivos Creados (Fase 1 & 2)
+- **10 componentes** nuevos LOFT
+- **5 imágenes** generadas con IA
+- **1 archivo** de estilos actualizado
+- **4 propiedades** mock data
 
-### Git
-- **2 commits** iniciales
-- Repositorio inicializado
-- `.gitignore` configurado
-
-### Build
-- ✅ Build de producción exitoso
-- ✅ TypeScript strict mode sin errores
-- ✅ 24 rutas estáticas generadas
-- ✅ Servidor dev funcionando
+### Performance
+- **Build Time**: 485ms (Next.js 16.1.6 Turbopack)
+- **Page Load**: ~941ms (compile + render)
+- **Imágenes**: Optimizadas con Next.js Image
+- **Bundle**: Route-based code splitting
 
 ---
 
-**Última actualización**: 2026-02-13
-**Versión**: 1.0.0
-**Estado**: FASE 0 - Scaffolding (100% COMPLETO) ✅
+## 💡 TIPS & BEST PRACTICES
+
+### CSS LOFT
+- Usar variables CSS LOFT (`--loft-orange`, `--loft-gradient-start`)
+- Mantener consistencia de color naranja en toda la plataforma
+- Gradientes solo en hero sections
+- Sombras sutiles (no de color)
+
+### Components LOFT
+- Property cards deben tener carrusel de imágenes
+- Todos los CTAs principales en naranja
+- Badges consistentes (amarillo new, gris type)
+- Hover effects suaves (0.2-0.3s)
+
+### Responsive LOFT
+- Mobile-first approach
+- Tabs con scroll horizontal en mobile
+- Grids adaptables: 1 → 2 → 4 columnas
+- Imágenes optimizadas para todos los tamaños
 
 ---
 
-## 🚀 LISTO PARA PRODUCCIÓN
+**Última actualización**: 2026-02-13 21:15
+**Versión**: 2.0.0
+**Estado**: FASE 1 & 2 COMPLETADAS ✅
 
-El proyecto está completamente scaffoldeado y listo para comenzar la implementación de funcionalidades. Todos los fundamentos están en su lugar:
+**URL Local**: http://localhost:3000
 
-✅ Arquitectura sólida con Next.js 16 + TypeScript
-✅ Design system profesional implementado
-✅ Sistema de tipos completo
-✅ Mock data realista para desarrollo
-✅ Layouts responsive (desktop + mobile)
-✅ 21 módulos mapeados y navegables
-✅ Build optimizado y sin errores
+---
 
-**¡Adelante con la Fase 1! 🎉**
+## 🎉 LISTO PARA CONTINUAR
+
+El proyecto tiene implementado:
+✅ Design system LOFT completo
+✅ Home page funcional con todos los componentes
+✅ Property cards interactivos
+✅ Sistema de navegación
+✅ Footer completo
+✅ Imágenes profesionales
+
+**Próximo objetivo**: Completar secciones finales de Home + Property Detail Page 🚀
