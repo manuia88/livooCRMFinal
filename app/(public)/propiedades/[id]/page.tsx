@@ -21,11 +21,11 @@ interface PropertyPageProps {
     };
 }
 
-// Generate metadata for SEO
 export async function generateMetadata({
     params,
 }: PropertyPageProps): Promise<Metadata> {
-    const property = mockProperties.find((p) => p.id === params.id);
+    const { id } = await params;
+    const property = mockProperties.find((p) => p.id === id);
 
     if (!property) {
         return {
@@ -51,8 +51,9 @@ export async function generateMetadata({
     };
 }
 
-export default function PropertyPage({ params }: PropertyPageProps) {
-    const property = mockProperties.find((p) => p.id === params.id);
+export default async function PropertyPage({ params }: PropertyPageProps) {
+    const { id } = await params;
+    const property = mockProperties.find((p) => p.id === id);
 
     if (!property) {
         notFound();

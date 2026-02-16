@@ -30,13 +30,13 @@ export default function DescubrirPage() {
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                {/* Category Pills */}
-                <div className="mb-12">
-                    <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
-                        Explora por Categoría
-                    </h2>
-                    <CategoryPills categories={categories} />
-                </div>
+                {/* Category Pills - Temporarily disabled due to serialization */}
+                //                 <div className="mb-12">
+                //                     <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
+                //                         Explora por Categoría
+                //                     </h2>
+                //                     <CategoryPills categories={categories} />
+                //                 </div>
 
                 {/* Featured Categories Mosaic */}
                 <div className="mb-16">
