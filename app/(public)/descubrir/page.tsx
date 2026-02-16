@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import CategoryHero from '@/components/discovery/CategoryHero';
+import CategoryCard from '@/components/discovery/CategoryCard';
+import { categoriesData } from '@/lib/discovery/categories';
+import { getCategoryPropertyCount } from '@/lib/discovery/filters';
+import { mockProperties } from '@/lib/mock-data/properties';
 
 export const metadata: Metadata = {
     title: 'Descubre Propiedades por Estilo de Vida | Livoo',
@@ -14,6 +18,17 @@ export const metadata: Metadata = {
 };
 
 export default function DescubrirPage() {
+    // Calculate property counts server-side
+    const categoriesWithCounts = categoriesData.map((category) => ({
+        ...category,
+        propertyCount: getCategoryPropertyCount(category.slug, mockProperties),
+    }));
+
+    // Sort by property count for featured section
+    const featured = [...categoriesWithCounts]
+        .sort((a, b) => b.propertyCount - a.propertyCount)
+        .slice(0, 3);
+
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Hero Section */}
@@ -21,20 +36,36 @@ export default function DescubrirPage() {
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                {/* Temporary Message - Categories coming soon */}
-                <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-                    <h2 className="text-3xl font-bold mb-4">Categorías Curadas - Próximamente</h2>
-                    <p className="text-lg text-gray-600 mb-8">
-                        Estamos preparando 12 categorías lifestyle para que encuentres tu hogar ideal:
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mb-8">
-                        {['🐕 Pet-Friendly', '🏊 Con Alberca', '🏋️ Con Gimnasio', '🌆 Vista Panorámica',
-                            '🏡 Roof Garden', '🚶 Walkability Alto', '💼 Home Office', '🌳 Cerca de Parques',
-                            '🎨 Diseño Moderno', '🏛️ Estilo Colonial', '🔒 Ultra Seguridad', '💰 Mejor Precio/m²'
-                        ].map((cat, idx) => (
-                            <div key={idx} className="bg-gradient-to-br from-gray-100 to-gray-200 p-4 rounded-lg">
-                                <span className="text-sm font-medium">{cat}</span>
-                            </div>
+                {/* Featured Categories */}
+                <div className="mb-16">
+                    <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
+                        Categorías Destacadas
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {featured.map((category) => (
+                            <CategoryCard
+                                key={category.slug}
+                                category={category}
+                                propertyCount={category.propertyCount}
+                                size="large"
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                {/* All Categories Grid */}
+                <div>
+                    <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
+                        Todas las Categorías
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {categoriesWithCounts.map((category) => (
+                            <CategoryCard
+                                key={category.slug}
+                                category={category}
+                                propertyCount={category.propertyCount}
+                                size="medium"
+                            />
                         ))}
                     </div>
                 </div>

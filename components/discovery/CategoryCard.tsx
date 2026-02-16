@@ -1,11 +1,14 @@
+'use client';
+
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import type { Category } from '@/lib/discovery/categories';
+import type { CategoryData } from '@/lib/discovery/categories';
 import { cn } from '@/lib/utils';
+import * as LucideIcons from 'lucide-react';
 
 interface CategoryCardProps {
-    category: Category;
+    category: CategoryData;
     propertyCount: number;
     size?: 'small' | 'medium' | 'large';
 }
@@ -15,7 +18,8 @@ export default function CategoryCard({
     propertyCount,
     size = 'medium',
 }: CategoryCardProps) {
-    const Icon = category.icon;
+    // Map iconName string to actual Lucide icon component
+    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
 
     const sizeClasses = {
         small: 'h-48',
@@ -48,7 +52,7 @@ export default function CategoryCard({
                     {/* Icon */}
                     <div className="flex justify-between items-start">
                         <div className="bg-white/20 backdrop-blur-sm p-3 rounded-lg">
-                            <Icon className="h-8 w-8" />
+                            {IconComponent && <IconComponent className="h-8 w-8" />}
                         </div>
                         <Badge className="bg-white/90 text-gray-900">
                             {propertyCount} {propertyCount === 1 ? 'propiedad' : 'propiedades'}

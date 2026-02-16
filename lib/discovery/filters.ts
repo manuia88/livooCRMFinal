@@ -1,14 +1,66 @@
 import type { Property } from '@/types';
-import { categories, type Category } from './categories';
+import { categoriesData, type CategoryData } from './categories';
 
+// Filter functions - server-side only
 export function getPropertiesByCategory(
     slug: string,
     allProperties: Property[]
 ): Property[] {
-    const category = categories.find((c) => c.slug === slug);
-    if (!category) return [];
+    const categoryFilters: Record<string, (prop: Property) => boolean> = {
+        'pet-friendly': (prop) => prop.features.includes('Acepta mascotas'),
+        'con-alberca': (prop) => prop.features.includes('Alberca'),
+        'con-gimnasio': (prop) => prop.features.includes('Gimnasio'),
+        'vista-panoramica': (prop) =>
+            prop.features.includes('Vista panorámica') ||
+            (prop.floor !== undefined && prop.floor >= 10),
+        'roof-garden': (prop) =>
+            prop.features.includes('Roof garden') ||
+            prop.features.includes('Terraza') ||
+            prop.type === 'Penthouse',
+        'walkability': (prop) => {
+            const walkableZones = ['Roma Norte', 'Condesa', 'Polanco', 'Del Valle'];
+            return walkableZones.some((zone) =>
+                prop.address.neighborhood?.includes(zone)
+            );
+        },
+        'home-office': (prop) =>
+            prop.bedrooms >= 2 ||
+            prop.features.includes('Estudio') ||
+            prop.features.includes('Cuarto de servicio'),
+        'cerca-parques': (prop) => {
+            const parkZones = ['Condesa', 'Polanco', 'Coyoacán', 'San Ángel'];
+            return parkZones.some((zone) =>
+                prop.address.neighborhood?.includes(zone)
+            );
+        },
+        'diseno-moderno': (prop) => {
+            const modernYear = prop.yearBuilt && prop.yearBuilt >= 2015;
+            const modernKeywords = prop.description
+                .toLowerCase()
+                .match(/moderno|contemporáneo|minimalista/);
+            return modernYear || !!modernKeywords;
+        },
+        'estilo-colonial': (prop) => {
+            const oldBuilding = prop.yearBuilt && prop.yearBuilt < 1970;
+            const colonialKeywords = prop.description
+                .toLowerCase()
+                .match(/colonial|clásico|histórico/);
+            return oldBuilding || !!colonialKeywords;
+        },
+        'ultra-seguridad': (prop) =>
+            prop.features.includes('Seguridad 24/7') &&
+            (prop.features.includes('CCTV') ||
+                prop.features.includes('Acceso controlado')),
+        'mejor-precio': (prop) => {
+            const pricePerSqm = prop.price / prop.area;
+            return pricePerSqm < 80000;
+        },
+    };
 
-    return allProperties.filter(category.filterFunction);
+    const filterFn = categoryFilters[slug];
+    if (!filterFn) return [];
+
+    return allProperties.filter(filterFn);
 }
 
 export function getCategoryStats(slug: string, allProperties: Property[]) {
@@ -39,9 +91,8 @@ export function getCategoryStats(slug: string, allProperties: Property[]) {
 export function getRelatedCategories(
     currentSlug: string,
     limit: number = 3
-): Category[] {
-    // Simple logic: return random categories excluding current
-    return categories
+): CategoryData[] {
+    return categoriesData
         .filter((c) => c.slug !== currentSlug)
         .sort(() => Math.random() - 0.5)
         .slice(0, limit);
