@@ -38,16 +38,16 @@ export default function DescubrirPage() {
                 //                     <CategoryPills categories={categories} />
                 //                 </div>
 
-                {/* Featured Categories Mosaic */}
-                <div className="mb-16">
-                    <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
-                        Categorías Destacadas
-                    </h2>
-                    <PropertyMosaic
-                        categories={categories}
-                        allProperties={mockProperties}
-                        getCategoryCount={getCategoryCount}
-                    />
+                {/* Featured Mosaic - Temporarily disabled due to serialization */}
+                //                 <div className="mb-16">
+                //                     <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
+                //                         Categorías Destacadas
+                //                     </h2>
+                //                     <PropertyMosaic
+                //                         categories={categories}
+                //                         allProperties={mockProperties}
+                //                         getCategoryCount={getCategoryCount}
+                //                     />
                 </div>
 
                 {/* All Categories Grid */}
@@ -55,15 +55,15 @@ export default function DescubrirPage() {
                     <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
                         Todas las Categorías
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {categories.map((category) => (
-                            <CategoryCard
-                                key={category.slug}
-                                category={category}
-                                propertyCount={getCategoryCount(category.slug)}
-                                size="medium"
-                            />
-                        ))}
+                        {/* Category grid - Temporarily disabled due to serialization */}
+                        //                         {categories.map((category) => (
+                        //                             <CategoryCard
+                        //                                 key={category.slug}
+                        //                                 category={category}
+                        //                                 propertyCount={getCategoryCount(category.slug)}
+                        //                                 size="medium"
+                        //                             />
+                        //                         ))}
                     </div>
                 </div>
 

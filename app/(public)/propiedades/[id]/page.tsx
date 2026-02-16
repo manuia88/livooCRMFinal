@@ -99,7 +99,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
                         <div className="flex-1">
                             <div className="flex items-center gap-3 mb-2">
-                                <Badge className="text-sm">{property.transaction}</Badge>
+                                <Badge className="text-sm">{property.operation}</Badge>
                                 <Badge variant="outline" className="text-sm">
                                     {property.type}
                                 </Badge>
@@ -116,7 +116,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                             <div className="flex items-center gap-2 text-[var(--text-secondary)]">
                                 <MapPin className="h-5 w-5 flex-shrink-0" />
                                 <span className="text-lg">
-                                    {property.location.neighborhood}, {property.location.alcaldia}
+                                    {property.address.neighborhood}, {property.address.alcaldia}
                                 </span>
                             </div>
                         </div>
@@ -181,8 +181,8 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
 
                         {/* Map */}
                         <PropertyMap
-                            latitude={property.location.coordinates.lat}
-                            longitude={property.location.coordinates.lng}
+                            latitude={property.address.coordinates.lat}
+                            longitude={property.address.coordinates.lng}
                             title={property.title}
                         />
                     </div>
@@ -236,8 +236,8 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                         priceCurrency: 'MXN',
                         address: {
                             '@type': 'PostalAddress',
-                            streetAddress: property.location.neighborhood,
-                            addressLocality: property.location.alcaldia,
+                            streetAddress: property.address.neighborhood,
+                            addressLocality: property.address.alcaldia,
                             addressRegion: 'CDMX',
                             addressCountry: 'MX',
                         },
