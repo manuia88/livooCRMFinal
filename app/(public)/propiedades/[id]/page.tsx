@@ -9,6 +9,7 @@ import ContactForms from '@/components/property/ContactForms';
 import SimilarProperties from '@/components/property/SimilarProperties';
 import PropertyMap from '@/components/property/PropertyMap';
 import ShareButtons from '@/components/property/ShareButtons';
+import WhatsAppButton from '@/components/property/WhatsAppButton';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MapPin, MessageCircle, Calendar } from 'lucide-react';
