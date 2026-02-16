@@ -12,6 +12,7 @@ import { mockProperties } from '@/lib/mock-data/properties';
 import CategoryCard from '@/components/discovery/CategoryCard';
 import { getCategoryPropertyCount } from '@/lib/discovery/filters';
 import { MapPin, Bed, Bath, Home } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 

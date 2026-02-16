@@ -1,0 +1,355 @@
+import { Desarrollo } from '@/types/desarrollo';
+
+export const mockDesarrollos: Desarrollo[] = [
+    {
+        id: 'des-001',
+        slug: 'torre-virreyes',
+        name: 'Torre Virreyes',
+        developer: 'Grupo Inmobiliario Premium',
+
+        address: {
+            street: 'Av. Virreyes 1234',
+            neighborhood: 'Polanco',
+            city: 'Ciudad de México',
+            state: 'CDMX',
+            coordinates: {
+                lat: 19.4326,
+                lng: -99.1949,
+            },
+        },
+
+        description: 'Torre Virreyes es un desarrollo de lujo que redefine la vida moderna en Polanco. Con acabados de primera clase y amenidades incomparables, ofrece departamentos de 1, 2 y 3 recámaras, así como exclusivos penthouses.',
+        tagline: 'Lujo y sofisticación en el corazón de Polanco',
+        totalUnits: 45,
+        availableUnits: 28,
+        priceFrom: 8500000,
+        priceTo: 25000000,
+        deliveryDate: 'Q4 2026',
+        constructionProgress: 65,
+
+        coverImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200',
+        gallery: [
+            'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200',
+            'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200',
+            'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200',
+            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200',
+            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200',
+        ],
+
+        floorPlans: [
+            {
+                id: 'fp-001',
+                name: '1 Recámara - Modelo A',
+                type: '1BR',
+                bedrooms: 1,
+                bathrooms: 1,
+                area: 65,
+                priceFrom: 8500000,
+                availableUnits: 8,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: false,
+            },
+            {
+                id: 'fp-002',
+                name: '2 Recámaras - Modelo B',
+                type: '2BR',
+                bedrooms: 2,
+                bathrooms: 2,
+                area: 95,
+                priceFrom: 12800000,
+                availableUnits: 12,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: true,
+            },
+            {
+                id: 'fp-003',
+                name: '3 Recámaras - Modelo C',
+                type: '3BR',
+                bedrooms: 3,
+                bathrooms: 2.5,
+                area: 140,
+                priceFrom: 18500000,
+                availableUnits: 6,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: false,
+            },
+            {
+                id: 'fp-004',
+                name: 'Penthouse',
+                type: 'PH',
+                bedrooms: 3,
+                bathrooms: 3.5,
+                area: 220,
+                priceFrom: 25000000,
+                availableUnits: 2,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: false,
+            },
+        ],
+
+        amenities: [
+            { name: 'Alberca', icon: 'Waves', image: 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=600' },
+            { name: 'Gimnasio', icon: 'Dumbbell', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600' },
+            { name: 'Coworking', icon: 'Briefcase', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600' },
+            { name: 'Roof Garden', icon: 'Trees', image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=600' },
+            { name: 'Salón de Eventos', icon: 'PartyPopper', image: 'https://images.unsplash.com/photo-1519167758481-83f29da8c2a6?w=600' },
+            { name: 'Kids Club', icon: 'Baby', image: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600' },
+            { name: 'Seguridad 24/7', icon: 'Shield', description: 'Acceso controlado y CCTV' },
+            { name: 'Estacionamiento', icon: 'Car', description: '2 cajones por departamento' },
+        ],
+
+        features: [
+            'Smart Home Technology',
+            'Pisos de madera europea',
+            'Cocinas italianas',
+            'Baños con mármol Carrera',
+            'Ventanas piso a techo',
+            'Sistema de purificación de aire',
+            'Certificación LEED Gold',
+            'Pet Friendly',
+        ],
+
+        milestones: [
+            { date: '2024-Q1', title: 'Inicio de obra', status: 'completed' },
+            { date: '2024-Q4', title: 'Estructura al 50%', status: 'completed' },
+            { date: '2025-Q2', title: 'Fachada completada', status: 'completed' },
+            { date: '2025-Q4', title: 'Acabados interiores', status: 'in-progress' },
+            { date: '2026-Q4', title: 'Entrega', status: 'pending' },
+        ],
+
+        salesOffice: {
+            address: 'Av. Virreyes 1250, Polanco, CDMX',
+            phone: '+52 55 1234 5678',
+            email: 'ventas@torrevirreyes.mx',
+            hours: 'Lunes a Domingo 10:00 - 19:00',
+        },
+
+        status: 'construction',
+        soldPercentage: 38,
+    },
+
+    {
+        id: 'des-002',
+        slug: 'parque-interlomas',
+        name: 'Parque Interlomas',
+        developer: 'Desarrollos Familiares SA',
+
+        address: {
+            street: 'Vialidad de la Barranca 456',
+            neighborhood: 'Interlomas',
+            city: 'Huixquilucan',
+            state: 'Estado de México',
+            coordinates: {
+                lat: 19.3889,
+                lng: -99.2667,
+            },
+        },
+
+        description: 'Comunidad residencial rodeada de naturaleza, diseñada para familias que buscan calidad de vida. Con amplias áreas verdes, seguridad privada y acceso rápido a las mejores escuelas de la zona.',
+        tagline: 'Tu hogar en medio de la naturaleza',
+        totalUnits: 120,
+        availableUnits: 67,
+        priceFrom: 4200000,
+        priceTo: 8500000,
+        deliveryDate: 'Q2 2027',
+        constructionProgress: 35,
+
+        coverImage: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200',
+        gallery: [
+            'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200',
+            'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200',
+            'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=1200',
+            'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200',
+        ],
+
+        floorPlans: [
+            {
+                id: 'fp-005',
+                name: '2 Recámaras - Modelo Garden',
+                type: '2BR',
+                bedrooms: 2,
+                bathrooms: 2,
+                area: 85,
+                priceFrom: 4200000,
+                availableUnits: 28,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: true,
+            },
+            {
+                id: 'fp-006',
+                name: '3 Recámaras - Modelo Family',
+                type: '3BR',
+                bedrooms: 3,
+                bathrooms: 2.5,
+                area: 120,
+                priceFrom: 5800000,
+                availableUnits: 32,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: true,
+            },
+            {
+                id: 'fp-007',
+                name: '3 Recámaras + Estudio',
+                type: '3BR',
+                bedrooms: 3,
+                bathrooms: 3,
+                area: 150,
+                priceFrom: 7200000,
+                availableUnits: 7,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: false,
+            },
+        ],
+
+        amenities: [
+            { name: 'Parque Central', icon: 'TreePine', image: 'https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=600' },
+            { name: 'Alberca semi-olímpica', icon: 'Waves' },
+            { name: 'Gimnasio', icon: 'Dumbbell' },
+            { name: 'Canchas deportivas', icon: 'Trophy' },
+            { name: 'Salón multiusos', icon: 'Users' },
+            { name: 'Pet Park', icon: 'Dog' },
+            { name: 'Senderos para trotar', icon: 'PersonStanding' },
+            { name: 'Caseta de seguridad', icon: 'Shield' },
+        ],
+
+        features: [
+            'Privada con acceso controlado',
+            'Áreas verdes (40% del terreno)',
+            'Calles peatonales',
+            'Cisterna y planta de tratamiento',
+            'Iluminación LED',
+            'Preparación para cargador eléctrico',
+            'Cocinas integrales',
+            '2 estacionamientos techados',
+        ],
+
+        milestones: [
+            { date: '2025-Q1', title: 'Inicio de obra', status: 'completed' },
+            { date: '2025-Q4', title: 'Urbanización', status: 'in-progress' },
+            { date: '2026-Q2', title: 'Inicio de construcción edificios', status: 'pending' },
+            { date: '2026-Q4', title: 'Amenidades completadas', status: 'pending' },
+            { date: '2027-Q2', title: 'Entrega', status: 'pending' },
+        ],
+
+        salesOffice: {
+            address: 'Av. Interlomas 789, Interlomas, Edomex',
+            phone: '+52 55 9876 5432',
+            email: 'info@parqueinterlomas.com',
+            hours: 'Lunes a Viernes 10:00 - 18:00, Sábados 11:00 - 16:00',
+        },
+
+        status: 'presale',
+        soldPercentage: 44,
+    },
+
+    {
+        id: 'des-003',
+        slug: 'aura-condesa',
+        name: 'Aura Condesa',
+        developer: 'Boutique Living MX',
+
+        address: {
+            street: 'Calle Amsterdam 123',
+            neighborhood: 'Condesa',
+            city: 'Ciudad de México',
+            state: 'CDMX',
+            coordinates: {
+                lat: 19.4084,
+                lng: -99.1720,
+            },
+        },
+
+        description: 'Desarrollo boutique en el corazón de la Condesa. Solo 24 residencias exclusivas con diseño contemporáneo inspirado en la arquitectura del barrio. A pasos de Parque México y la mejor oferta cultural de la ciudad.',
+        tagline: 'Elegancia boutique en la Condesa',
+        totalUnits: 24,
+        availableUnits: 12,
+        priceFrom: 5800000,
+        priceTo: 9500000,
+        deliveryDate: 'Q1 2027',
+        constructionProgress: 80,
+
+        coverImage: 'https://images.unsplash.com/photo-1600607687664-c7171b42498b?w=1200',
+        gallery: [
+            'https://images.unsplash.com/photo-1600607687664-c7171b42498b?w=1200',
+            'https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=1200',
+            'https://images.unsplash.com/photo-1600573472549-e19de61d3e2c?w=1200',
+        ],
+
+        floorPlans: [
+            {
+                id: 'fp-008',
+                name: '1 Recámara Loft',
+                type: '1BR',
+                bedrooms: 1,
+                bathrooms: 1,
+                area: 55,
+                priceFrom: 5800000,
+                availableUnits: 4,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: false,
+            },
+            {
+                id: 'fp-009',
+                name: '2 Recámaras Urban',
+                type: '2BR',
+                bedrooms: 2,
+                bathrooms: 2,
+                area: 80,
+                priceFrom: 7200000,
+                availableUnits: 6,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: true,
+            },
+            {
+                id: 'fp-010',
+                name: '2 Recámaras + Terraza',
+                type: '2BR',
+                bedrooms: 2,
+                bathrooms: 2,
+                area: 90,
+                priceFrom: 9500000,
+                availableUnits: 2,
+                floorPlanImage: 'https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800',
+                isPopular: false,
+            },
+        ],
+
+        amenities: [
+            { name: 'Roof Garden', icon: 'Trees', image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=600' },
+            { name: 'Coworking', icon: 'Laptop' },
+            { name: 'Bike Storage', icon: 'Bike' },
+            { name: 'Bodega por depto', icon: 'Package' },
+            { name: 'Lobby con concierge', icon: 'User' },
+            { name: 'Estacionamiento', icon: 'Car', description: '1 cajón por depto' },
+        ],
+
+        features: [
+            'Diseño arquitectónico premiado',
+            'Fachada con art deco contemporáneo',
+            'Doble altura en lobbies',
+            'Cocinas europeas Scavolini',
+            'Cancelería de aluminio europea',
+            'Domótica básica',
+            'Preparación para mini-split',
+            'Pet Friendly (perros pequeños)',
+        ],
+
+        milestones: [
+            { date: '2024-Q2', title: 'Inicio de obra', status: 'completed' },
+            { date: '2025-Q1', title: 'Estructura completada', status: 'completed' },
+            { date: '2025-Q3', title: 'Fachada terminada', status: 'completed' },
+            { date: '2026-Q2', title: 'Acabados finales', status: 'in-progress' },
+            { date: '2027-Q1', title: 'Entrega', status: 'pending' },
+        ],
+
+        salesOffice: {
+            address: 'Amsterdam 125, Condesa, CDMX',
+            phone: '+52 55 5555 1234',
+            email: 'contacto@auracondesa.mx',
+            hours: 'Lunes a Sábado 11:00 - 19:00',
+        },
+
+        status: 'construction',
+        soldPercentage: 50,
+    },
+];
