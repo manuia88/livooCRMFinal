@@ -46,16 +46,17 @@ export async function generateMetadata({
     };
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-    const category = getCategoryBySlug(params.slug);
+export default async function CategoryPage({ params }: CategoryPageProps) {
+    const { slug } = await params;
+    const category = getCategoryBySlug(slug);
 
     if (!category) {
         notFound();
     }
 
-    const properties = getPropertiesByCategory(params.slug, mockProperties);
-    const stats = getCategoryStats(params.slug, mockProperties);
-    const relatedCategories = getRelatedCategories(params.slug, 3);
+    const properties = getPropertiesByCategory(slug, mockProperties);
+    const stats = getCategoryStats(slug, mockProperties);
+    const relatedCategories = getRelatedCategories(slug, 3);
     const Icon = category.icon;
 
     const formatPrice = (price: number) => {
