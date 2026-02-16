@@ -23,7 +23,7 @@ export default function SimilarProperties({
             if (prop.id === currentProperty.id) return false;
 
             // Same alcaldía/zona
-            if (prop.location.alcaldia !== currentProperty.location.alcaldia) {
+            if (prop.address.alcaldia !== currentProperty.location.alcaldia) {
                 return false;
             }
 
@@ -82,7 +82,7 @@ export default function SimilarProperties({
                                 <div className="flex items-center gap-1 text-sm text-[var(--text-secondary)] mb-3">
                                     <MapPin className="h-4 w-4 flex-shrink-0" />
                                     <span className="line-clamp-1">
-                                        {property.location.neighborhood}, {property.location.alcaldia}
+                                        {property.address.neighborhood}, {property.address.alcaldia}
                                     </span>
                                 </div>
 
