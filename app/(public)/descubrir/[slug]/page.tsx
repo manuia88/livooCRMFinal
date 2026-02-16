@@ -80,7 +80,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="bg-white/20 backdrop-blur-sm p-4 rounded-lg">
-                            {{ IconComponent && <IconComponent className="h-10 w-10" /> }}
+                            {IconComponent && <IconComponent className="h-10 w-10" />}
                         </div>
                         <div>
                             <h1 className="text-4xl font-bold mb-2">{category.title}</h1>
@@ -111,7 +111,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 {properties.length === 0 ? (
                     <div className="text-center py-16">
                         <div className="bg-gray-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Icon className="h-12 w-12 text-gray-400" />
+                            { IconComponent && <IconComponent className="h-12 w-12 text-gray-400" /> }
                         </div>
                         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">
                             No hay propiedades disponibles
