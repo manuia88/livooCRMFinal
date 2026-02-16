@@ -57,7 +57,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     const properties = getPropertiesByCategory(slug, mockProperties);
     const stats = getCategoryStats(slug, mockProperties);
     const relatedCategories = getRelatedCategories(slug, 3);
-    const Icon = category.icon;
+
+    // Map iconName string to Lucide icon component
+    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('es-MX', {
@@ -78,7 +80,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="bg-white/20 backdrop-blur-sm p-4 rounded-lg">
-                            <Icon className="h-10 w-10" />
+                            {{ IconComponent && <IconComponent className="h-10 w-10" /> }}
                         </div>
                         <div>
                             <h1 className="text-4xl font-bold mb-2">{category.title}</h1>
