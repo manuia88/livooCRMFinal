@@ -130,18 +130,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
 
                     {/* Quick CTA */}
                     <div className="flex gap-3 pt-4 border-t border-gray-200">
-                        <Button
-                            className="flex-1 md:flex-none bg-green-600 hover:bg-green-700 gap-2"
-                            onClick={() => {
-                                const message = encodeURIComponent(
-                                    `Hola, me interesa ${property.title}. ¿Podrías darme más información?`
-                                );
-                                window.open(`https://wa.me/5512345678?text=${message}`, '_blank');
-                            }}
-                        >
-                            <MessageCircle className="h-5 w-5" />
-                            Contactar por WhatsApp
-                        </Button>
+                        <WhatsAppButton propertyTitle={property.title} />
                         <Button variant="outline" className="flex-1 md:flex-none gap-2">
                             <Calendar className="h-5 w-5" />
                             Agendar Visita

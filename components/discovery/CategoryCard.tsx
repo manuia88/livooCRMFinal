@@ -1,11 +1,17 @@
-'use client';
-
 import Link from 'next/link';
+import * as LucideIcons from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import type { CategoryData } from '@/lib/discovery/categories';
 import { cn } from '@/lib/utils';
-import * as LucideIcons from 'lucide-react';
+
+interface CategoryData {
+    slug: string;
+    title: string;
+    description: string;
+    iconName: string;
+    color: string;
+    gradient: string;
+}
 
 interface CategoryCardProps {
     category: CategoryData;
@@ -19,7 +25,9 @@ export default function CategoryCard({
     size = 'medium',
 }: CategoryCardProps) {
     // Map iconName string to actual Lucide icon component
-    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
+    const IconComponent = (LucideIcons as any)[category.iconName] as
+        | React.ComponentType<{ className?: string }>
+        | undefined;
 
     const sizeClasses = {
         small: 'h-48',
@@ -28,7 +36,7 @@ export default function CategoryCard({
     };
 
     return (
-        <Link href={`/descubrir/${category.slug}`}>
+        <Link href={`/descubrir/${category.slug}`} className="block">
             <Card
                 className={cn(
                     'relative overflow-hidden group cursor-pointer transition-all hover:scale-105 hover:shadow-xl',

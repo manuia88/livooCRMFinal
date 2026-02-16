@@ -24,7 +24,8 @@ interface CategoryPageProps {
 export async function generateMetadata({
     params,
 }: CategoryPageProps): Promise<Metadata> {
-    const category = getCategoryBySlug(params.slug);
+    const { slug } = await params;
+    const category = getCategoryBySlug(slug);
 
     if (!category) {
         return {
@@ -32,7 +33,7 @@ export async function generateMetadata({
         };
     }
 
-    const stats = getCategoryStats(params.slug, mockProperties);
+    const stats = getCategoryStats(slug, mockProperties);
 
     return {
         title: `${category.title} - ${stats.count} Propiedades | Livoo`,
