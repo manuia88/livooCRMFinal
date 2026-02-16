@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { getCategoryBySlug } from '@/lib/discovery/categories';
+import { getCategoryBySlug, categories } from '@/lib/discovery/categories';
 import {
     getPropertiesByCategory,
     getCategoryStats,
@@ -12,7 +12,6 @@ import { mockProperties } from '@/lib/mock-data/properties';
 import CategoryCard from '@/components/discovery/CategoryCard';
 import { getCategoryPropertyCount } from '@/lib/discovery/filters';
 import { MapPin, Bed, Bath, Home } from 'lucide-react';
-import * as LucideIcons from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -45,29 +44,17 @@ export async function generateMetadata({
         },
     };
 }
-export default async function CategoryPage({ params }: CategoryPageProps) {
-    const { slug } = await params;
-    const category = getCategoryBySlug(slug);
+
+export default function CategoryPage({ params }: CategoryPageProps) {
+    const category = getCategoryBySlug(params.slug);
 
     if (!category) {
         notFound();
     }
-    const properties = getPropertiesByCategory(slug, mockProperties);
-    const stats = getCategoryStats(slug, mockProperties);
-    const relatedCategories = getRelatedCategories(slug, 3);
-    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
-    const properties = getPropertiesByCategory(slug, mockProperties);
-    const stats = getCategoryStats(slug, mockProperties);
-    const relatedCategories = getRelatedCategories(slug, 3);
-    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
-    const properties = getPropertiesByCategory(slug, mockProperties);
-    const stats = getCategoryStats(slug, mockProperties);
-    const relatedCategories = getRelatedCategories(slug, 3);
-    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
-    const properties = getPropertiesByCategory(slug, mockProperties);
-    const stats = getCategoryStats(slug, mockProperties);
-    const relatedCategories = getRelatedCategories(slug, 3);
-    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
+
+    const properties = getPropertiesByCategory(params.slug, mockProperties);
+    const stats = getCategoryStats(params.slug, mockProperties);
+    const relatedCategories = getRelatedCategories(params.slug, 3);
     const Icon = category.icon;
 
     const formatPrice = (price: number) => {
@@ -89,7 +76,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="bg-white/20 backdrop-blur-sm p-4 rounded-lg">
-                            {IconComponent && <IconComponent className="h-10 w-10" />}
+                            <Icon className="h-10 w-10" />
                         </div>
                         <div>
                             <h1 className="text-4xl font-bold mb-2">{category.title}</h1>
@@ -120,7 +107,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 {properties.length === 0 ? (
                     <div className="text-center py-16">
                         <div className="bg-gray-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
-                            {IconComponent && <IconComponent className="h-12 w-12 text-gray-400" />}
+                            <Icon className="h-12 w-12 text-gray-400" />
                         </div>
                         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">
                             No hay propiedades disponibles
