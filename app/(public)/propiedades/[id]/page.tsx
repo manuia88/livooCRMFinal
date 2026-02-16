@@ -181,8 +181,8 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
 
                         {/* Map */}
                         <PropertyMap
-                            latitude={property.address.coordinates.lat}
-                            longitude={property.address.coordinates.lng}
+                            latitude={property.address.coordinates?.lat || 19.432608}
+                            longitude={property.address.coordinates?.lng || -99.133209}
                             title={property.title}
                         />
                     </div>

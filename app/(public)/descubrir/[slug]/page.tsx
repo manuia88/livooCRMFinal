@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { getCategoryBySlug, categories } from '@/lib/discovery/categories';
+import { getCategoryBySlug } from '@/lib/discovery/categories';
 import {
     getPropertiesByCategory,
     getCategoryStats,
@@ -12,6 +12,7 @@ import { mockProperties } from '@/lib/mock-data/properties';
 import CategoryCard from '@/components/discovery/CategoryCard';
 import { getCategoryPropertyCount } from '@/lib/discovery/filters';
 import { MapPin, Bed, Bath, Home } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -44,17 +45,29 @@ export async function generateMetadata({
         },
     };
 }
-
-export default function CategoryPage({ params }: CategoryPageProps) {
-    const category = getCategoryBySlug(params.slug);
+export default async function CategoryPage({ params }: CategoryPageProps) {
+    const { slug } = await params;
+    const category = getCategoryBySlug(slug);
 
     if (!category) {
         notFound();
     }
-
-    const properties = getPropertiesByCategory(params.slug, mockProperties);
-    const stats = getCategoryStats(params.slug, mockProperties);
-    const relatedCategories = getRelatedCategories(params.slug, 3);
+    const properties = getPropertiesByCategory(slug, mockProperties);
+    const stats = getCategoryStats(slug, mockProperties);
+    const relatedCategories = getRelatedCategories(slug, 3);
+    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
+    const properties = getPropertiesByCategory(slug, mockProperties);
+    const stats = getCategoryStats(slug, mockProperties);
+    const relatedCategories = getRelatedCategories(slug, 3);
+    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
+    const properties = getPropertiesByCategory(slug, mockProperties);
+    const stats = getCategoryStats(slug, mockProperties);
+    const relatedCategories = getRelatedCategories(slug, 3);
+    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
+    const properties = getPropertiesByCategory(slug, mockProperties);
+    const stats = getCategoryStats(slug, mockProperties);
+    const relatedCategories = getRelatedCategories(slug, 3);
+    const IconComponent = (LucideIcons as any)[category.iconName] as React.ComponentType<{ className?: string }>;
     const Icon = category.icon;
 
     const formatPrice = (price: number) => {
