@@ -23,7 +23,7 @@ export default function SimilarProperties({
             if (prop.id === currentProperty.id) return false;
 
             // Same alcaldía/zona
-            if (prop.address.alcaldia !== currentProperty.location.alcaldia) {
+            if (prop.address.alcaldia !== currentProperty.address.alcaldia) {
                 return false;
             }
 
