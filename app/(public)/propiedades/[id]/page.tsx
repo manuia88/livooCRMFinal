@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { mockProperties } from '@/lib/mockData';
+import { mockProperties } from '@/lib/mock-data/properties';
 import ImageCarousel from '@/components/property/ImageCarousel';
 import PropertySpecs from '@/components/property/PropertySpecs';
 import PropertyFeatures from '@/components/property/PropertyFeatures';
