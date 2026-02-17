@@ -7,25 +7,25 @@ const services = [
         icon: Building2,
         title: "Encuentra una agencia inmobiliaria",
         description: "Conecta con las mejores agencias de tu región",
-        link: "/para-imobiliarias",
+        link: "/dashboard", // Point to dashboard/login
     },
     {
         icon: Home,
         title: "Vender o alquilar mi propiedad",
         description: "Publica tu inmueble de forma rápida y sencilla",
-        link: "/vender",
+        link: "/valuacion", // Point to Valuation module
     },
     {
         icon: CreditCard,
         title: "Financia tu propiedad",
         description: "Encuentra las mejores opciones de financiamiento",
-        link: "/financiamiento",
+        link: "/dashboard", // Point to dashboard
     },
     {
         icon: Users,
         title: "Agencia inmobiliaria, únete a Loft",
         description: "Potencia tu negocio con nuestra tecnología",
-        link: "/para-imobiliarias",
+        link: "/dashboard", // Point to dashboard
     },
 ];
 

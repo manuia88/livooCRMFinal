@@ -35,6 +35,7 @@ export default function BuscarPage() {
     const [viewMode, setViewMode] = useState<ViewMode>('grid');
     const [sortBy, setSortBy] = useState<SortOption>('recent');
     const [selectedPropertyId, setSelectedPropertyId] = useState<string | undefined>();
+    const [showMap, setShowMap] = useState(true);
     const [showFilters, setShowFilters] = useState(false);
 
     // Filters
@@ -136,6 +137,17 @@ export default function BuscarPage() {
                         </p>
                     </div>
                     <div className="flex items-center gap-4">
+                        {/* Map Toggle */}
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="hidden md:flex"
+                            onClick={() => setShowMap(!showMap)}
+                        >
+                            {showMap ? <MapPin className="h-4 w-4 mr-2" /> : <MapPin className="h-4 w-4 mr-2" />}
+                            {showMap ? 'Ocultar Mapa' : 'Ver Mapa'}
+                        </Button>
+
                         {/* Sort */}
                         <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
                             <SelectTrigger className="w-[180px]">
@@ -272,19 +284,21 @@ export default function BuscarPage() {
                 )}
             </header>
 
-            {/* Main Content: 50/50 Split */}
+            {/* Main Content: Split */}
             <div className="flex flex-1 overflow-hidden">
-                {/* Map (Left 50%) */}
-                <div className="hidden md:block w-1/2 relative">
-                    <PropertyMap
-                        properties={filteredProperties}
-                        selectedPropertyId={selectedPropertyId}
-                        onPropertyClick={setSelectedPropertyId}
-                    />
-                </div>
+                {/* Map */}
+                {showMap && (
+                    <div className="hidden md:block w-1/2 relative">
+                        <PropertyMap
+                            properties={filteredProperties}
+                            selectedPropertyId={selectedPropertyId}
+                            onPropertyClick={setSelectedPropertyId}
+                        />
+                    </div>
+                )}
 
-                {/* Listings (Right 50%) */}
-                <div className="w-full md:w-1/2 overflow-y-auto bg-[var(--bg-page)] p-6">
+                {/* Listings */}
+                <div className={`w-full ${showMap ? 'md:w-1/2' : 'md:w-full'} overflow-y-auto bg-[var(--bg-page)] p-6 transition-all duration-300`}>
                     {filteredProperties.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-64 text-center">
                             <Home className="h-16 w-16 text-gray-300 mb-4" />
@@ -304,7 +318,7 @@ export default function BuscarPage() {
                         <div
                             className={
                                 viewMode === 'grid'
-                                    ? 'grid grid-cols-1 lg:grid-cols-2 gap-4'
+                                    ? `grid grid-cols-1 ${showMap ? 'lg:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'} gap-4`
                                     : 'space-y-4'
                             }
                         >
@@ -314,8 +328,8 @@ export default function BuscarPage() {
                                     property={property}
                                     viewMode={viewMode}
                                     isSelected={property.id === selectedPropertyId}
-                                    onMouseEnter={() => setSelectedPropertyId(property.id)}
-                                    onClick={() => setSelectedPropertyId(property.id)}
+                                    onMouseEnter={() => { }} // Disabled hover effect
+                                    onClick={() => setSelectedPropertyId(property.id)} // Keep for mobile highlighting if needed
                                 />
                             ))}
                         </div>
@@ -325,6 +339,8 @@ export default function BuscarPage() {
         </div>
     );
 }
+
+import Link from 'next/link';
 
 // Property Card Component
 function PropertyCard({
@@ -349,23 +365,20 @@ function PropertyCard({
 
     return (
         <Card
-            className={`overflow-hidden cursor-pointer transition-all duration-200 ${isSelected
-                    ? 'ring-2 ring-[var(--primary)] shadow-lg'
-                    : 'hover:shadow-md'
+            className={`overflow-hidden cursor-pointer transition-all duration-200 group ${isSelected
+                ? 'ring-2 ring-[var(--primary)] shadow-lg'
+                : 'hover:shadow-md'
                 }`}
             onMouseEnter={onMouseEnter}
             onClick={onClick}
         >
-            <div className={viewMode === 'list' ? 'flex' : ''}>
-                {/* Image */}
-                <div
-                    className={`relative ${viewMode === 'list' ? 'w-48 h-48' : 'h-48 w-full'
-                        }`}
-                >
+            <div className={viewMode === 'list' ? 'flex h-full' : 'h-full flex flex-col'}>
+                {/* Image - Clickable Link */}
+                <Link href={`/propiedades/${property.id}`} className={`relative block ${viewMode === 'list' ? 'w-48 h-48 shrink-0' : 'h-48 w-full'}`}>
                     <img
                         src={property.images[0]}
                         alt={property.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <Badge
                         className="absolute top-2 left-2 capitalize"
@@ -376,13 +389,15 @@ function PropertyCard({
                     <Badge className="absolute top-2 right-2 capitalize" variant="outline">
                         {property.type}
                     </Badge>
-                </div>
+                </Link>
 
                 {/* Details */}
-                <div className="p-4 flex-1">
-                    <h3 className="font-semibold text-[var(--text-primary)] mb-1 line-clamp-2">
-                        {property.title}
-                    </h3>
+                <div className="p-4 flex-1 flex flex-col">
+                    <Link href={`/propiedades/${property.id}`} className="block">
+                        <h3 className="font-semibold text-[var(--text-primary)] mb-1 line-clamp-2 group-hover:text-[#FF6B35] transition-colors">
+                            {property.title}
+                        </h3>
+                    </Link>
                     <p className="text-sm text-[var(--text-secondary)] mb-2 flex items-center gap-1">
                         <MapPin className="h-3 w-3" />
                         {property.address.neighborhood}, {property.address.state}
@@ -390,7 +405,7 @@ function PropertyCard({
                     <p className="text-xl font-bold text-[var(--primary)] mb-3">
                         {formatPrice(property.price)}
                     </p>
-                    <div className="flex items-center gap-4 text-sm text-[var(--text-secondary)]">
+                    <div className="flex items-center gap-4 text-sm text-[var(--text-secondary)] mt-auto">
                         {property.area > 0 && <span>{property.area}m²</span>}
                         {property.bedrooms > 0 && (
                             <span className="flex items-center gap-1">

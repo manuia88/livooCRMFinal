@@ -14,35 +14,25 @@ export default function LivooHeader() {
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center space-x-8">
-                    <div className="relative group">
-                        <button className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
-                            Comprar
-                        </button>
-                    </div>
+                    <Link href="/buscar" className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
+                        Comprar
+                    </Link>
 
-                    <div className="relative group">
-                        <button className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
-                            Rentar
-                        </button>
-                    </div>
+                    <Link href="/buscar?operation=rent" className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
+                        Rentar
+                    </Link>
 
-                    <div className="relative group">
-                        <button className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
-                            Vender
-                        </button>
-                    </div>
+                    <Link href="/valuacion" className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
+                        Vender
+                    </Link>
 
-                    <div className="relative group">
-                        <button className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
-                            Para Agencias
-                        </button>
-                    </div>
+                    <Link href="/desarrollos" className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
+                        Desarrollos
+                    </Link>
 
-                    <div className="relative group">
-                        <button className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
-                            Sobre LIVOO
-                        </button>
-                    </div>
+                    <Link href="/dashboard" className="text-[#556B55] hover:text-[#B8975A] font-medium transition-colors">
+                        Para Agencias
+                    </Link>
 
                     <Button
                         className="bg-gradient-to-r from-[#B8975A] to-[#C4A872] hover:from-[#C4A872] hover:to-[#B8975A] text-white font-semibold px-6 rounded-xl shadow-lg"
