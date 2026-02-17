@@ -1,6 +1,6 @@
 'use client';
 
-import { Handle, Position } from 'reactflow';
+import { Handle, Position } from '@xyflow/react';
 import { Target, Zap, Clock, Cake, Calendar, Home } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 

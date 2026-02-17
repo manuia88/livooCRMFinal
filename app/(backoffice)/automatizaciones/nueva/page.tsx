@@ -9,7 +9,7 @@ import WorkflowCanvas from '@/components/automation/WorkflowCanvas';
 import NodePalette from '@/components/automation/NodePalette';
 import NodeConfigPanel from '@/components/automation/NodeConfigPanel';
 import { workflowTemplates } from '@/lib/automation/workflowTemplates';
-import { Node, Edge } from 'reactflow';
+import { Node, Edge } from '@xyflow/react';
 
 export default function NewWorkflowPage() {
     const router = useRouter();
@@ -45,7 +45,7 @@ export default function NewWorkflowPage() {
             };
 
             setNodes((nds) => [...nds, newNode]);
-            setNextNodeId(nextNodeId + 1);
+            setNextNodeId((id) => id + 1);
         },
         [nextNodeId, nodes.length]
     );

@@ -1,6 +1,6 @@
 'use client';
 
-import { Handle, Position } from 'reactflow';
+import { Handle, Position } from '@xyflow/react';
 import { MessageSquare, Mail, CheckSquare, UserPlus, Tag, Edit, Bell } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
